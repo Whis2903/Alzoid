@@ -1,0 +1,88 @@
+from datetime import date
+today = date.today()
+a = (today)
+
+from datetime import datetime
+
+now = datetime.now()
+
+current_time = now.strftime("%H:%M:%S")
+b = (current_time)
+
+import requests
+
+
+def get_ip():
+    response = requests.get('https://api64.ipify.org?format=json').json()
+    return response["ip"]
+
+
+def get_location():
+    ip_address = get_ip()
+    response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
+    location_data = {
+        "ip": ip_address,
+        
+    }
+    return location_data
+
+
+c = (get_location())
+
+# importing geopy library
+from geopy.geocoders import Nominatim
+
+# calling the Nominatim tool
+loc = Nominatim(user_agent="GetLoc")
+
+# entering the location name
+getLoc = loc.geocode("chennai,tamil nadu")
+
+# printing address
+d = (getLoc.address)
+
+#latitude and longitude
+e = ("Latitude = ", getLoc.latitude, "\n")
+f = ("Longitude = ", getLoc.longitude,"\n")
+
+from faker import Faker
+faker = Faker()
+g = (faker.address())
+h = (faker.email())
+i = (faker.country())
+j = (faker.text())
+k = (faker.latitude(), faker.longitude())
+l = (faker.url())
+
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+sentiment = SentimentIntensityAnalyzer()
+text_1 = "the book is gross"
+text_2 =  "i like u"
+sent_1 = sentiment.polarity_scores(text_1)
+sent_2 = sentiment.polarity_scores(text_2)
+m = ("Sentiment of text 1:", sent_1)
+n = ("Sentiment of text 2:", sent_2)
+
+
+
+qna = {
+       "hi" : "ALZOID : hey,i'm ALZOID ur prsonal assitant",
+       "ssup" : "ALZOID : i'm good, just coping up with some technical stuff",
+       "i am nice" : "ALZOID : that's great, nice to know",
+       "i need help" : "ALZOID : how may i assist u",
+       "what's the date" : "ALZOID : the date is: " + str(a),
+       "what's the time" : "ALZOID : the time is: " + str(b),
+       "who created u?" : "ALZOID : Shreyas did",
+       "create me a dummy identity" : "ALZOID : here's your freshly made identity:" +str(g)+str(h)+str(i)+str(j)+str(k)+str(l),
+       "get my location" : "ALZOID : here's your location: " +str(getLoc) + str(d) + str(e) + str(f) ,
+       "what's my ip" : "ALZOID : your ip is : " + str(c),
+       "rate the comments" : "ALZOID : my ratings are : " + str(m)+str(n),
+}
+
+while True:
+    qs = input()
+
+    if(qs == "quit"):
+        break
+    else:
+        print(qna[qs])
